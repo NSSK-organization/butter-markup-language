@@ -1,0 +1,18 @@
+begin paragraph
+    This is a paragraph. While HTML is filled with odd standards and tags, Butter Markup Language (BUML) will provide a nice, readable, english-like experience.
+    You can include multiple paragraphs, but make sure to finish it when done (notice the escape character). You can do other things. For instance, you can /b/make this text bold!/b/ BUML allows many tags, too, like /b//i/this text, which is bold and italic/b//i/.
+    /b/This entire paragraph is bold! We can use pipe characters to cancel out all formatting. /i/While this text is bold and italic, |this text is not, because it is surrounded by pipes.| /i//b/
+end paragraph
+
+begin code
+    /* Below is some C code. */
+    #include <stdio.h>
+
+    int main() {
+        printf("This is C code! Eventually, BUML will also come with syntax highlighting.")
+    }
+end code
+
+begin quote
+    this would normally correspond to a blockquote in Markdown.
+end quote

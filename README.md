@@ -1,2 +1,2 @@
-# butter-markup-language
-The Butter Markdown language, for easier web development.
+# BUML (Butter Markup Language)
+The Butter Markup language, for easier web development.
