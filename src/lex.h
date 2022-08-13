@@ -3,3 +3,4 @@
 #define SLASH 3 /* /       */
 #define PIPE 4  /* |       */
 
+void lex(FILE*, FILE*);
