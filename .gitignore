@@ -1,0 +1,6 @@
+# replit files
+*repl*
+.ccls-cache/
+
+# C executables
+a.out
