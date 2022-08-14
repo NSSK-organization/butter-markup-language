@@ -2,5 +2,10 @@
 *repl*
 .ccls-cache/
 
-# C executables
+# C executables and object files
 a.out
+*.o
+
+# personal compilation tools
+*.sh # makefile alternative
+Makefile
