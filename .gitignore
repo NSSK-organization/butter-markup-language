@@ -9,3 +9,7 @@ a.out
 # personal compilation tools
 *.sh # makefile alternative
 Makefile
+
+# example files to work with
+src/*.buml
+src/*.html # for when a.out converts a BuML file into HTML
