@@ -22,12 +22,11 @@ int main(int argc, char** argv) {
     new_file_name[len + 4] = '\0';
     printf("%s\n", new_file_name);
 
-    printf("pre-newfile");
     /* lex and parse the new HTML file and push html code into .html file */
-    FILE* html_file = fopen(new_file_name, "+w");
+    FILE* html_file = fopen(new_file_name, "w+");
     printf("close to lex");
     lex(argv[1], new_file_name);
     printf("post lex");
 
-    //free(new_file_name);
+    free(new_file_name);
 }

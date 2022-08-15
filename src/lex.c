@@ -18,7 +18,7 @@ void lex(char* input_file_name, char* target_file_name) {
     /* Copy HTML tags that already exist in the base document */
     while((c = fgetc(input_file)) != EOF) { /* parse through file for HTML and string literals */
         if(isalpha(c) && (state == 0 || state == 1)) /* c is an alphabet, and is thus part of a string literal or markdown-flavored HTML */
-            putchar(c); /* put the string back in the file unharmed */
+            fputs(c); /* put the string back in the file unharmed */
         else if(c == '<') { /* Beginning of tag in markdown */
             state = 1;
             fputs("<", target); /* Start HTML tag */
