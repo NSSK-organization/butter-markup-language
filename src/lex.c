@@ -3,8 +3,15 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-void lex(char* input_file_name, char* target_file_name) {
-    int found_word = 0;
+void lex(const char* input_file_name, const char* target_file_name) {
+	/* lex: lexically analyze a given BuML file and put it into HTML */
+	/* if you want to be technical, it DOES also parse... */
+	/* but if you think this you should probably shut the fuck up. */
+	/* (c) Nishant Kompella, 2022 */
+
+    printf("hllo\n");
+
+	int found_word = 0;
     char c;
     int state; /* 0 for string literal, 1 for part of HTML tag, 2 for part of comment */
     char* current_word; /* current word that is being parsed */
@@ -12,13 +19,16 @@ void lex(char* input_file_name, char* target_file_name) {
     char* temp_array;
     int taglen; /* strlen for current_tag */
 
-    FILE* input_file = fopen(input_file_name, "r+");
-    FILE* target = fopen(target_file_name, "r+");
+
+	/* opening files assuming files are already existing */
+	/* if .html file does not exist, main.c is assumed to have created one */
+    FILE* input_file = fopen(input_file_name, "w+");
+    FILE* target = fopen(target_file_name, "w+");
 
     /* Copy HTML tags that already exist in the base document */
     while((c = fgetc(input_file)) != EOF) { /* parse through file for HTML and string literals */
         if(isalpha(c) && (state == 0 || state == 1)) /* c is an alphabet, and is thus part of a string literal or markdown-flavored HTML */
-            fputs(c); /* put the string back in the file unharmed */
+            fputs(c, target); /* put the string back in the file unharmed */
         else if(c == '<') { /* Beginning of tag in markdown */
             state = 1;
             fputs("<", target); /* Start HTML tag */
@@ -34,11 +44,12 @@ void lex(char* input_file_name, char* target_file_name) {
         }
             /* todo: add syntax highlighting, highlighting, strikethough, bold, italics, other stuff */
     }
-        
+    
     rewind(input_file); /* re-open input file for parsing */
-
     
-    
+	/* begin formal BUML lexing */
+	
+	printf("closing files...\n");
     fclose(input_file);
     fclose(target);
 }

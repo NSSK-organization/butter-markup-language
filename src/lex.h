@@ -6,6 +6,6 @@
 #define SLASH 3 /* /       */
 #define PIPE  4 /* |       */
 
-void lex(char*, char*);
+void lex(const char*, const char*);
 
 #endif /* LEX_H */
