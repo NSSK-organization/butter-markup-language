@@ -6,7 +6,7 @@
 void lex(const char* input_file_name, const char* target_file_name) {
 	/* lex: lexically analyze a given BuML file and put it into HTML */
 	/* if you want to be technical, it DOES also parse... */
-	/* but if you think this you should probably shut the fuck up. */
+	/* but if you think this you should probably shut up. */
 	/* (c) Nishant Kompella, 2022 */
 
     printf("hllo\n");
@@ -48,7 +48,55 @@ void lex(const char* input_file_name, const char* target_file_name) {
     rewind(input_file); /* re-open input file for parsing */
     
 	/* begin formal BUML lexing */
-	
+
+	while(current_word != EOF) {
+		fscanf(input_file, "%s", current_word);
+		
+		/* now begins translation */
+		switch(current_word) {
+			case "begin":
+				fputs("<", target);
+				break;
+			case "end":
+				fputs("</", target);
+				break;
+			case "paragraph":
+				fputs("p>", target);
+				break;
+			javascript:case "script": /* works with "javascript" or "js" */
+				fputs("script>", target);
+				break;
+			case "js":
+				goto javascript;
+			case "javascript":
+				goto javascript;
+			css:case "style": /* works with "css" */
+				fputs("style>", target);
+				break;
+			case "css":
+				goto css;
+			code:case "code": /* works with "codeblock", "codeb" or "block" */
+				fputs("code>", target);
+				break;
+			case "codeblock":
+				goto code;
+			case "codeb":
+				goto code;
+			case "block":
+				goto code;
+			meta:case "meta": /* works with "metadata" as well */
+				fputs("meta>", target);
+				break;
+			case "metadata":
+				goto meta;
+			case "\n":
+				fputs("\n", target);
+				break;
+			default:
+				fprintf(stderr, "WARNING: no string found before end-of-file.\n");
+		}
+	}
+
 	printf("closing files...\n");
     fclose(input_file);
     fclose(target);
