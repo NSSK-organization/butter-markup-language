@@ -6,7 +6,6 @@
 
 int main(int argc, char** argv) {
     /* create a new .html file with the same name as the .buml one */
-    FILE* input_file = fopen(argv[1], "r");
     printf("%s\n", argv[1]);
     char* new_file_name; /* to create new HTML file */
     new_file_name = strdup(argv[1]); /* copy the name of the .buml file */
@@ -23,7 +22,6 @@ int main(int argc, char** argv) {
     printf("%s\n", new_file_name);
 
     /* lex and parse the new HTML file and push html code into .html file */
-    FILE* html_file = fopen(new_file_name, "w+");
     lex(argv[1], new_file_name);
 
     free(new_file_name);
