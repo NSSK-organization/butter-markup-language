@@ -10,6 +10,9 @@ void lex(const char* input_file_name, const char* target_file_name) {
 	/* but if you think this you should probably shut up. */
 	/* (c) Nishant Kompella, 2022 */
 
+	printf("hi\n");
+	
+	int file_state = 0; /* 0 for unopened, 1 for code, 2 for ended */
 	int found_word = 0;
     char c;
     int state; /* 0 for string literal, 1 for part of HTML tag, 2 for part of comment */
@@ -21,7 +24,7 @@ void lex(const char* input_file_name, const char* target_file_name) {
 
 	/* opening files assuming files are already existing */
 	/* if .html file does not exist, main.c is assumed to have created one */
-    FILE* input_file = fopen(input_file_name, "r");
+	FILE* input_file = fopen(input_file_name, "r+");
     FILE* target = fopen(target_file_name, "w+");
 	goto lexing;
 
@@ -50,54 +53,57 @@ void lex(const char* input_file_name, const char* target_file_name) {
 	/* begin formal BUML lexing */
 
 	lexing:
+	printf("lexing...\n");
 	do {
 		fscanf(input_file, "%s", current_word);
 		
 		/* now begins translation */
-		if(strcmp(current_word, "begin")) {
+		if(strcmp(current_word, "begin") == 0) {
 			fputs("<", target);
 		}
-		else if(strcmp(current_word, "end")) {
+		else if(strcmp(current_word, "end") == 0) {
 			fputs("</", target);
 		}
-		else if(strcmp(current_word, "paragraph")) {
+		else if(strcmp(current_word, "paragraph") == 0) {
 			fputs("p>", target);
 		}
-		else if(strcmp(current_word, "script")) {
+		else if(strcmp(current_word, "script") == 0) {
 			javascript: /* works with "javascript" or "js" */
 			fputs("script>", target);
 		}
-		else if(strcmp(current_word, "js"))
+		else if(strcmp(current_word, "js") == 0)
 			goto javascript;
-		else if(strcmp(current_word, "javascript"))
+		else if(strcmp(current_word, "javascript") == 0)
 			goto javascript;
-		else if(strcmp(current_word, "style")) {
+		else if(strcmp(current_word, "style") == 0) {
 			css: /* works with "css" */
 			fputs("style>", target);
 		}
-		else if(strcmp(current_word, "css"))
+		else if(strcmp(current_word, "css") == 0)
 			goto css;
-		else if(strcmp(current_word, "code")) {
+		else if(strcmp(current_word, "code") == 0) {
 			code: /* works with "codeblock", "codeb" or "block" */
 			fputs("code>", target);
 		}
-		else if(strcmp(current_word, "codeblock"))
+		else if(strcmp(current_word, "codeblock") == 0)
 			goto code;
-		else if(strcmp(current_word, "codeb"))
+		else if(strcmp(current_word, "codeb") == 0)
 			goto code;
-		else if(strcmp(current_word, "block"))
+		else if(strcmp(current_word, "block") == 0)
 			goto code;
-		else if(strcmp(current_word, "meta")) {
+		else if(strcmp(current_word, "meta") == 0) {
 			meta: /* works with "metadata" as well */
 			fputs("meta>", target);
 		}
-		else if(strcmp(current_word, "metadata"))
+		else if(strcmp(current_word, "metadata") == 0)
 			goto meta;
-		else if(strcmp(current_word, "\n")) {
+		else if(strcmp(current_word, "\n") == 0) {
 			fputs("\n", target);
 		}
+		else if(strcmp(current_word, "file") == 0)
+			file_state++;
 	}
-	while(current_word != EOF);
+	while(current_word != "file" && file_state == 1);
 
 	printf("closing files...\n");
     fclose(input_file);
