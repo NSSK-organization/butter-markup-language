@@ -5,11 +5,15 @@
 # C executables and object files
 a.out
 *.o
+*.swp
 
 # personal compilation tools
 *.sh # makefile alternative
-Makefile
+run # shellscript I creataed for testing
 
 # example files to work with
 src/*.buml
 src/*.html # for when a.out converts a BuML file into HTML
+
+# misc.
+.DS_Store # wtf is this?!?!

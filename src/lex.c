@@ -25,11 +25,18 @@ void lex(const char* input_file_name, const char* target_file_name) {
 	/* opening files assuming files are already existing */
 	/* if .html file does not exist, main.c is assumed to have created one */
 	FILE* input_file = fopen(input_file_name, "r+");
-    FILE* target = fopen(target_file_name, "w+");
+    FILE* target = fopen(target_file_name, "w");
+
+	if(input_file == NULL || target == NULL) {
+		printf("ERROR: requested file does not exist.\nExiting Program.\n");
+		fprintf(stderr, "Error: requested file does not exist.\n");
+	}
+
 	goto lexing;
 
     /* Copy HTML tags that already exist in the base document */
     while((c = fgetc(input_file)) != EOF) { /* parse through file for HTML and string literals */
+		printf("parsing...\n");
         if(isalpha(c) && (state == 0 || state == 1)) /* c is an alphabet, and is thus part of a string literal or markdown-flavored HTML */
             fputs(c, target); /* put the string back in the file unharmed */
         else if(c == '<') { /* Beginning of tag in markdown */
@@ -55,8 +62,12 @@ void lex(const char* input_file_name, const char* target_file_name) {
 	lexing:
 	printf("lexing...\n");
 	do {
+		printf("asd");
+
 		fscanf(input_file, "%s", current_word);
-		
+	
+		printf("snickernut");
+			
 		/* now begins translation */
 		if(strcmp(current_word, "begin") == 0) {
 			fputs("<", target);
